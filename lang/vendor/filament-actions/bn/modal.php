@@ -7,15 +7,15 @@ return [
     'actions' => [
 
         'cancel' => [
-            'label' => 'বন্ধ করুন',
+            'label' => 'বাতিল করুন',
         ],
 
         'confirm' => [
-            'label' => 'নিশ্চিত করুন',
+            'label' => 'হ্যাঁ',
         ],
 
         'submit' => [
-            'label' => 'জমা দিন',
+            'label' => 'হ্যাঁ',
         ],
 
     ],

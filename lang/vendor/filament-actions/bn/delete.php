@@ -4,16 +4,16 @@ return [
 
     'single' => [
 
-        'label' => 'মুছে ফেলুন',
+        'label' => 'ডিলিট করুন',
 
         'modal' => [
 
-            'heading' => ':label মুছে ফেলুন',
+            'heading' => ':label ডিলিট করুন',
 
             'actions' => [
 
                 'delete' => [
-                    'label' => 'মুছে ফেলুন',
+                    'label' => 'ডিলিট করুন',
                 ],
 
             ],
@@ -23,7 +23,7 @@ return [
         'notifications' => [
 
             'deleted' => [
-                'title' => 'মুছে ফেলা হয়েছে',
+                'title' => 'ডিলিট করা হয়েছে',
             ],
 
         ],
@@ -32,16 +32,16 @@ return [
 
     'multiple' => [
 
-        'label' => 'নির্বাচিত গুলো মুছে ফেলুন',
+        'label' => 'ডিলিট করুন',
 
         'modal' => [
 
-            'heading' => 'নির্বাচিত :label মুছে ফেলুন',
+            'heading' => ':label ডিলিট করুন',
 
             'actions' => [
 
                 'delete' => [
-                    'label' => 'মুছে ফেলুন',
+                    'label' => 'ডিলিট করুন',
                 ],
 
             ],
@@ -51,7 +51,7 @@ return [
         'notifications' => [
 
             'deleted' => [
-                'title' => 'মুছে ফেলা হয়েছে',
+                'title' => 'ডিলিট করা হয়েছে',
             ],
 
         ],
