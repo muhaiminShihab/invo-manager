@@ -29,7 +29,19 @@ class CustomerResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->label('নাম')
+                    ->required()
+                    ->maxLength(50),
+                Forms\Components\TextInput::make('phone')
+                    ->label('ফোন')
+                    ->tel()
+                    ->required()
+                    ->maxLength(15),
+                Forms\Components\TextInput::make('email')
+                    ->label('ইমেইল')
+                    ->email()
+                    ->maxLength(50),
             ]);
     }
 
@@ -37,7 +49,16 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->label('নাম')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label('ফোন')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('ইমেইল')
+                    ->searchable()
+                    ->placeholder('N/A'),
             ])
             ->filters([
                 //
