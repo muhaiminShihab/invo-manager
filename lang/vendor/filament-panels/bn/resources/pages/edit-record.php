@@ -11,7 +11,7 @@ return [
         'actions' => [
 
             'cancel' => [
-                'label' => 'বন্ধ করুন',
+                'label' => 'লিস্টে ফিরে যান',
             ],
 
             'save' => [

@@ -13,12 +13,11 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
-        $prefix = 'app_';
         $settings = [
-            ['key' => $prefix . 'name', 'value' => 'Due Invoice Manager'],
-            ['key' => $prefix . 'email', 'value' => 'app@example.com'],
-            ['key' => $prefix . 'phone', 'value' => '+880 1234-567890'],
-            ['key' => $prefix . 'address', 'value' => 'Mirpur, Dhaka-1206, Bangladesh']
+            ['key' => 'name', 'value' => 'Due Invoice Manager'],
+            ['key' => 'email', 'value' => 'app@example.com'],
+            ['key' => 'phone', 'value' => '+880 1234-567890'],
+            ['key' => 'address', 'value' => 'Mirpur, Dhaka-1206, Bangladesh']
         ];
 
         foreach ($settings as $setting) {

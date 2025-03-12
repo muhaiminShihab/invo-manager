@@ -6,9 +6,13 @@ use App\Filament\Resources\SettingResource\Pages;
 use App\Filament\Resources\SettingResource\RelationManagers;
 use App\Models\Setting;
 use Filament\Forms;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -29,7 +33,16 @@ class SettingResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Section::make()
+                    ->schema([
+                        TextInput::make('key')
+                            ->label('নাম')
+                            ->readOnly()
+                            ->formatStateUsing(fn(string $state): string => strtoupper($state)),
+                        TextInput::make('value')
+                            ->label('ডাটা')
+                            ->required()
+                    ])
             ]);
     }
 
@@ -37,18 +50,16 @@ class SettingResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('key')
+                    ->label('নাম')
+                    ->formatStateUsing(fn(string $state): string => strtoupper($state)),
+                TextColumn::make('value')->label('ডাটা'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -63,7 +74,7 @@ class SettingResource extends Resource
     {
         return [
             'index' => Pages\ListSettings::route('/'),
-            'create' => Pages\CreateSetting::route('/create'),
+            // 'create' => Pages\CreateSetting::route('/create'),
             'edit' => Pages\EditSetting::route('/{record}/edit'),
         ];
     }
