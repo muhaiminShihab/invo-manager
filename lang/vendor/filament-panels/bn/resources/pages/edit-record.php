@@ -1,0 +1,41 @@
+<?php
+
+return [
+
+    'title' => ':label এডিট',
+
+    'breadcrumb' => 'এডিট করুন',
+
+    'form' => [
+
+        'actions' => [
+
+            'cancel' => [
+                'label' => 'বন্ধ করুন',
+            ],
+
+            'save' => [
+                'label' => 'আপডেট করুন',
+            ],
+
+        ],
+
+    ],
+
+    'content' => [
+
+        'tab' => [
+            'label' => 'এডিট',
+        ],
+
+    ],
+
+    'notifications' => [
+
+        'saved' => [
+            'title' => 'আপডেট করা হয়েছে',
+        ],
+
+    ],
+
+];

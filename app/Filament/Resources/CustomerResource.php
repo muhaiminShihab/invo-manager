@@ -17,7 +17,13 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?string $navigationLabel = 'গ্রাহক সমূহ';
+
+    protected static ?string $modelLabel = 'গ্রাহক';
+
+    protected static ?string $pluralModelLabel = 'গ্রাহক সমূহ';
 
     public static function form(Form $form): Form
     {
