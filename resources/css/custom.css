@@ -1,3 +1,7 @@
 nav.fi-sidebar-nav svg {
     width: 20px;
 }
+
+nav.fi-sidebar-nav {
+    border-right: 1px solid rgba(var(--gray-200),1);
+}

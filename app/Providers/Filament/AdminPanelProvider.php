@@ -64,6 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->sidebarWidth('250px')
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return app(AdminNavigationService::class)->build($builder);
             });
