@@ -45,13 +45,18 @@ class AdminNavigationService
 
     private function getInvoiceManagementGroup(): NavigationGroup
     {
-        return NavigationGroup::make('ইনভয়েজ ম্যানেজমেন্ট')
+        return NavigationGroup::make('ইনভয়েজ ম্যানেজমেন্ট')
             ->items([
-                ...InvoiceResource::getNavigationItems(),
+                NavigationItem::make('চালান সমূহ')
+                    ->icon('heroicon-o-document-text')
+                    ->url(fn(): string => InvoiceResource::getUrl('index'))
+                    ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.resources.invoices.index'))
+                    ->sort(1),
                 NavigationItem::make('চালান তৈরী করুন')
-                    ->icon('heroicon-o-plus')
+                    ->icon('heroicon-o-plus-circle')
                     ->url(fn(): string => InvoiceResource::getUrl('create'))
-                    ->sort(2),
+                    ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.resources.invoices.create'))
+                    ->sort(2)
             ]);
     }
 
