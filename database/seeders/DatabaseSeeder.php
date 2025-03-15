@@ -14,19 +14,14 @@ class DatabaseSeeder extends Seeder
         // Create 50 customers
         $customers = Customer::factory(50)->create();
 
-        $customers->each(function ($customer) {
-            // Create 1-5 invoices for each customer
-            $invoices = Invoice::factory(rand(1, 5)) // Use rand() instead of fake()
+        $customers->each(
+            fn($customer) => Invoice::factory(rand(1, 5))
                 ->for($customer)
-                ->create();
-
-            $invoices->each(function ($invoice) {
-                // Create 3-10 items for each invoice
-                $invoice->items()->createMany(
-                    InvoiceItem::factory(rand(3, 10))->make()->map(fn($item) => $item->toArray())->toArray()
-                );
-            });
-        });
+                ->create(['date' => now()->subDays(rand(0, 365))]) // Generates a date within the past year
+                ->each(fn($invoice) => $invoice->items()->createMany(
+                    InvoiceItem::factory(rand(3, 10))->make()->toArray()
+                ))
+        );
 
         $this->call([
             UserSeeder::class,
