@@ -98,7 +98,6 @@ class InvoiceResource extends Resource
                                 Forms\Components\TextInput::make('final_price')
                                     ->label('সর্বমোট')
                                     ->numeric()
-                                    // ->disabled()
                                     ->live()
                                     ->afterStateUpdated(function ($state, $component) {
                                         $container = $component->getContainer();
