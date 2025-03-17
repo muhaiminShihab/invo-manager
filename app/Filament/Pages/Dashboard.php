@@ -20,9 +20,12 @@ class Dashboard extends BaseDashboard
                 Section::make()
                     ->schema([
                         DatePicker::make('startDate')
+                            ->label('তারিখ থেকে')
                             ->default(now()->startOfYear())
                             ->maxDate(fn (Get $get) => $get('endDate') ?: now()),
                         DatePicker::make('endDate')
+                            ->label('তারিখ পর্যন্ত')
+                            ->default(now())
                             ->minDate(fn (Get $get) => $get('startDate') ?: now())
                             ->maxDate(now()),
                     ])
