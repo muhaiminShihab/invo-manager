@@ -4,43 +4,102 @@ namespace App\Filament\Widgets;
 
 use App\Models\Customer;
 use App\Models\Invoice;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Carbon;
 
 class StatsOverview extends BaseWidget
 {
+    use InteractsWithPageFilters;
+
     protected function getStats(): array
     {
-        $currentYear = Carbon::now()->year;
+        // Ensure filters exist before accessing them
+        $startDate = isset($this->filters['startDate']) && !empty($this->filters['startDate'])
+            ? Carbon::parse($this->filters['startDate'] . ' 00:00:00')
+            : now()->startOfYear();
+
+        $endDate = isset($this->filters['endDate']) && !empty($this->filters['endDate'])
+            ? Carbon::parse($this->filters['endDate'] . ' 23:59:59')
+            : now();
+
+        // Query customer count
+        $totalCustomers = Customer::whereBetween('created_at', [$startDate, $endDate])->count();
+
+        // Query invoice count
+        $totalInvoices = Invoice::whereBetween('date', [$startDate, $endDate])->count();
+
+        // Query unpaid invoices
+        $totalUnpaidInvoices = Invoice::where('status', 'unpaid')
+            ->whereBetween('date', [$startDate, $endDate])
+            ->count();
+
+        // Query paid invoices
+        $totalPaidInvoices = Invoice::where('status', 'paid')
+            ->whereBetween('date', [$startDate, $endDate])
+            ->count();
+
+        // Calculate total amount
+        $totalAmount = Invoice::whereBetween('date', [$startDate, $endDate])
+            ->with('items')
+            ->get()
+            ->sum(fn($invoice) => $invoice->items->sum('final_price'));
+
+        // Calculate total unpaid amount
+        $totalUnpaidAmount = Invoice::whereBetween('date', [$startDate, $endDate])
+            ->where('status', 'unpaid')
+            ->with('items')
+            ->get()
+            ->sum(fn($invoice) => $invoice->items->sum('final_price'));
+
+        // Calculate total paid amount
+        $totalPaidAmount = Invoice::whereBetween('date', [$startDate, $endDate])
+            ->where('status', 'paid')
+            ->with('items')
+            ->get()
+            ->sum(fn($invoice) => $invoice->items->sum('final_price'));
 
         return [
-            Stat::make('মোট গ্রাহক', Customer::whereYear('created_at', $currentYear)->count())
-                ->description($currentYear . ' সালের মোট গ্রাহক')
-                ->descriptionIcon('heroicon-m-users')
-                ->color('success'),
+            Stat::make('মোট গ্রাহক', $this->convertToBanglaNumber($totalCustomers))
+                ->color('success')
+                ->icon('heroicon-o-users'),
 
-            Stat::make('মোট চালান', Invoice::whereYear('date', $currentYear)->count())
-                ->description($currentYear . ' সালের মোট চালান')
-                ->descriptionIcon('heroicon-m-document-text')
-                ->color('info'),
+            Stat::make('মোট চালান', $this->convertToBanglaNumber($totalInvoices))
+                ->color('info')
+                ->icon('heroicon-o-document-text'),
 
-            Stat::make('মোট বাকি', Invoice::where('status', 'unpaid')
-                ->whereYear('date', $currentYear)
-                ->count())
-                ->description($currentYear . ' সালের বাকি চালান')
-                ->descriptionIcon('heroicon-m-exclamation-circle')
-                ->color('danger'),
+            Stat::make('মোট বাকি চালান', $this->convertToBanglaNumber($totalUnpaidInvoices))
+                ->color('danger')
+                ->icon('heroicon-o-document-text'),
 
-            Stat::make('মোট টাকা', number_format(Invoice::with('items')
-                ->whereYear('date', $currentYear)
-                ->get()
-                ->sum(function ($invoice) {
-                    return $invoice->items->sum('final_price');
-                }), 2) . ' ৳')
-                ->description($currentYear . ' সালের মোট টাকা')
-                ->descriptionIcon('heroicon-m-banknotes')
-                ->color('success'),
+            Stat::make('মোট পরিশোধিত চালান', $this->convertToBanglaNumber($totalPaidInvoices))
+                ->color('danger')
+                ->icon('heroicon-o-document-text'),
+
+            Stat::make('মোট টাকা', $this->convertToBanglaNumber($totalAmount) . ' ৳')
+                ->color('success')
+                ->icon('heroicon-o-banknotes'),
+
+            Stat::make('মোট বাকি টাকা', $this->convertToBanglaNumber($totalUnpaidAmount) . ' ৳')
+                ->color('success')
+                ->icon('heroicon-o-banknotes'),
+
+            Stat::make('মোট পরিশোধিত টাকা', $this->convertToBanglaNumber($totalPaidAmount) . ' ৳')
+                ->color('success')
+                ->icon('heroicon-o-banknotes'),
         ];
+    }
+
+    /**
+     * Convert English numbers to Bangla numbers.
+     */
+    function convertToBanglaNumber($number, $decimalPlaces = 0)
+    {
+        $number = number_format($number, $decimalPlaces);
+        $englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        $banglaDigits  = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+
+        return str_replace($englishDigits, $banglaDigits, $number);
     }
 }
