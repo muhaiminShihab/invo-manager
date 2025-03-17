@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Customer;
 use App\Models\Invoice;
+use App\Models\User;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -23,6 +24,9 @@ class StatsOverview extends BaseWidget
         $endDate = isset($this->filters['endDate']) && !empty($this->filters['endDate'])
             ? Carbon::parse($this->filters['endDate'] . ' 23:59:59')
             : now();
+
+        // Query user count
+        $totalUsers = User::whereBetween('created_at', [$startDate, $endDate])->count();
 
         // Query customer count
         $totalCustomers = Customer::whereBetween('created_at', [$startDate, $endDate])->count();
@@ -61,19 +65,23 @@ class StatsOverview extends BaseWidget
             ->sum(fn($invoice) => $invoice->items->sum('final_price'));
 
         return [
-            Stat::make('মোট গ্রাহক', $this->convertToBanglaNumber($totalCustomers))
+            Stat::make('মোট ইউজার', $this->convertToBanglaNumber($totalUsers))
                 ->color('success')
                 ->icon('heroicon-o-users'),
+
+            Stat::make('মোট গ্রাহক', $this->convertToBanglaNumber($totalCustomers))
+                ->color('success')
+                ->icon('heroicon-o-user-group'),
 
             Stat::make('মোট চালান', $this->convertToBanglaNumber($totalInvoices))
                 ->color('info')
                 ->icon('heroicon-o-document-text'),
 
-            Stat::make('মোট বাকি চালান', $this->convertToBanglaNumber($totalUnpaidInvoices))
+            Stat::make('মোট পরিশোধিত চালান', $this->convertToBanglaNumber($totalPaidInvoices))
                 ->color('danger')
                 ->icon('heroicon-o-document-text'),
 
-            Stat::make('মোট পরিশোধিত চালান', $this->convertToBanglaNumber($totalPaidInvoices))
+            Stat::make('মোট বাকি চালান', $this->convertToBanglaNumber($totalUnpaidInvoices))
                 ->color('danger')
                 ->icon('heroicon-o-document-text'),
 
@@ -81,11 +89,11 @@ class StatsOverview extends BaseWidget
                 ->color('success')
                 ->icon('heroicon-o-banknotes'),
 
-            Stat::make('মোট বাকি টাকা', $this->convertToBanglaNumber($totalUnpaidAmount) . ' ৳')
+            Stat::make('মোট পরিশোধিত টাকা', $this->convertToBanglaNumber($totalPaidAmount) . ' ৳')
                 ->color('success')
                 ->icon('heroicon-o-banknotes'),
 
-            Stat::make('মোট পরিশোধিত টাকা', $this->convertToBanglaNumber($totalPaidAmount) . ' ৳')
+            Stat::make('মোট বাকি টাকা', $this->convertToBanglaNumber($totalUnpaidAmount) . ' ৳')
                 ->color('success')
                 ->icon('heroicon-o-banknotes'),
         ];
