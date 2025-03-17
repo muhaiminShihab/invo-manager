@@ -177,6 +177,25 @@ class InvoiceResource extends Resource
                     ->relationship('customer', 'name')
                     ->searchable()
                     ->preload(),
+                Tables\Filters\Filter::make('date')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')
+                            ->label('তারিখ থেকে'),
+                        Forms\Components\DatePicker::make('created_until')
+                            ->label('তারিখ পর্যন্ত')
+                            ->default(now()),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
