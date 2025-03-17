@@ -153,12 +153,16 @@ class InvoiceResource extends Resource
                     ->label('স্ট্যাটাস')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'paid' => 'success',
+                        'paid' => 'primary',
                         'unpaid' => 'danger',
                     })
                     ->formatStateUsing(fn(string $state): string => match ($state) {
                         'paid' => 'পরিশোধিত',
                         'unpaid' => 'বাকি',
+                    })
+                    ->icon(fn(string $state): string => match ($state) {
+                        'paid' => 'heroicon-s-check-badge',
+                        'unpaid' => 'heroicon-s-x-circle',
                     }),
             ])
             ->filters([
