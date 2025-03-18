@@ -26,6 +26,22 @@ class InvoiceResource extends Resource
 
     public static function form(Form $form): Form
     {
+        // Define the function as a Closure inside form()
+        $updateFinalPrice = function (callable $set, callable $get) {
+            $quantity = (float) ($get('quantity') ?? 1);
+            $price = (float) ($get('price') ?? 0);
+            $discountType = $get('discount_type') ?? 'fixed';
+            $discountValue = (float) ($get('discount_value') ?? 0);
+
+            $subtotal = $quantity * $price;
+            $discount = $discountType === 'percentage'
+                ? ($subtotal * $discountValue) / 100
+                : $discountValue;
+
+            $finalPrice = max(0, $subtotal - $discount);
+            $set('final_price', $finalPrice);
+        };
+
         return $form
             ->schema([
                 Forms\Components\Section::make()
@@ -40,7 +56,6 @@ class InvoiceResource extends Resource
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->default(fn() => 'INV-' . now()->format('Ymd-His'))
-                            // ->disabled()
                             ->dehydrated(),
                         Forms\Components\Select::make('customer_id')
                             ->label('গ্রাহক')
@@ -65,6 +80,7 @@ class InvoiceResource extends Resource
                 Forms\Components\Section::make('আইটেম সমূহ')
                     ->schema([
                         Forms\Components\Repeater::make('items')
+                            ->label('আইটেমস')
                             ->relationship()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
@@ -74,13 +90,17 @@ class InvoiceResource extends Resource
                                     ->label('পরিমাণ')
                                     ->numeric()
                                     ->default(1)
+                                    ->minValue(1)
                                     ->required()
-                                    ->live(),
+                                    // ->live(onBlur: true)
+                                    ->afterStateUpdated(fn($state, callable $set, callable $get) => $updateFinalPrice($set, $get)),
                                 Forms\Components\TextInput::make('price')
                                     ->label('মূল্য')
                                     ->numeric()
+                                    ->minValue(0)
                                     ->required()
-                                    ->live(),
+                                    // ->live(onBlur: true)
+                                    ->afterStateUpdated(fn($state, callable $set, callable $get) => $updateFinalPrice($set, $get)),
                                 Forms\Components\Select::make('discount_type')
                                     ->label('ডিসকাউন্ট টাইপ')
                                     ->options([
@@ -89,34 +109,18 @@ class InvoiceResource extends Resource
                                     ])
                                     ->default('fixed')
                                     ->required()
-                                    ->live(),
+                                    // ->live(onBlur: true)
+                                    ->afterStateUpdated(fn($state, callable $set, callable $get) => $updateFinalPrice($set, $get)),
                                 Forms\Components\TextInput::make('discount_value')
                                     ->label('ডিসকাউন্ট')
                                     ->numeric()
                                     ->default(0)
-                                    ->live(),
+                                    ->minValue(0)
+                                    // ->live(onBlur: true)
+                                    ->afterStateUpdated(fn($state, callable $set, callable $get) => $updateFinalPrice($set, $get)),
                                 Forms\Components\TextInput::make('final_price')
                                     ->label('সর্বমোট')
-                                    ->numeric()
-                                    ->live()
-                                    ->afterStateUpdated(function ($state, $component) {
-                                        $container = $component->getContainer();
-                                        if (!$container) return;
-
-                                        $state = $container->getState();
-
-                                        $quantity = (float) ($state['quantity'] ?? 1);
-                                        $price = (float) ($state['price'] ?? 0);
-                                        $discountType = $state['discount_type'] ?? 'fixed';
-                                        $discountValue = (float) ($state['discount_value'] ?? 0);
-
-                                        $subtotal = $quantity * $price;
-                                        $discount = $discountType === 'percentage'
-                                            ? ($subtotal * $discountValue) / 100
-                                            : $discountValue;
-
-                                        $component->state(max(0, $subtotal - $discount));
-                                    }),
+                                    ->numeric(),
                             ])
                             ->columns(6)
                             ->defaultItems(1)
