@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InvoiceResource\Pages;
 use App\Models\Invoice;
 use App\Models\Customer;
+use App\Services\ConvertToBanglaService;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -146,7 +147,7 @@ class InvoiceResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('items_count')
                     ->label('আইটেম')
-                    ->counts('items'),
+                    ->getStateUsing(fn($record) => ConvertToBanglaService::number($record->items()->count())),
                 Tables\Columns\TextColumn::make('items_amount')
                     ->label('সর্বমোট')
                     ->money('BDT')

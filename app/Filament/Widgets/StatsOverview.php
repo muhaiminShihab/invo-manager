@@ -9,6 +9,7 @@ use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Carbon;
+use App\Services\ConvertToBanglaService;
 
 class StatsOverview extends BaseWidget
 {
@@ -65,49 +66,37 @@ class StatsOverview extends BaseWidget
             ->sum(fn($invoice) => $invoice->items->sum('final_price'));
 
         return [
-            Stat::make('মোট ইউজার', $this->convertToBanglaNumber($totalUsers))
+            Stat::make('মোট ইউজার', ConvertToBanglaService::number($totalUsers))
                 ->color('success')
                 ->icon('heroicon-o-users'),
 
-            Stat::make('মোট গ্রাহক', $this->convertToBanglaNumber($totalCustomers))
+            Stat::make('মোট গ্রাহক', ConvertToBanglaService::number($totalCustomers))
                 ->color('success')
                 ->icon('heroicon-o-user-group'),
 
-            Stat::make('মোট চালান', $this->convertToBanglaNumber($totalInvoices))
+            Stat::make('মোট চালান', ConvertToBanglaService::number($totalInvoices))
                 ->color('info')
                 ->icon('heroicon-o-document-text'),
 
-            Stat::make('মোট পরিশোধিত চালান', $this->convertToBanglaNumber($totalPaidInvoices))
+            Stat::make('মোট পরিশোধিত চালান', ConvertToBanglaService::number($totalPaidInvoices))
                 ->color('danger')
                 ->icon('heroicon-o-document-text'),
 
-            Stat::make('মোট বাকি চালান', $this->convertToBanglaNumber($totalUnpaidInvoices))
+            Stat::make('মোট বাকি চালান', ConvertToBanglaService::number($totalUnpaidInvoices))
                 ->color('danger')
                 ->icon('heroicon-o-document-text'),
 
-            Stat::make('মোট টাকা', $this->convertToBanglaNumber($totalAmount) . ' ৳')
+            Stat::make('মোট টাকা', ConvertToBanglaService::number($totalAmount) . ' ৳')
                 ->color('success')
                 ->icon('heroicon-o-banknotes'),
 
-            Stat::make('মোট পরিশোধিত টাকা', $this->convertToBanglaNumber($totalPaidAmount) . ' ৳')
+            Stat::make('মোট পরিশোধিত টাকা', ConvertToBanglaService::number($totalPaidAmount) . ' ৳')
                 ->color('success')
                 ->icon('heroicon-o-banknotes'),
 
-            Stat::make('মোট বাকি টাকা', $this->convertToBanglaNumber($totalUnpaidAmount) . ' ৳')
+            Stat::make('মোট বাকি টাকা', ConvertToBanglaService::number($totalUnpaidAmount) . ' ৳')
                 ->color('success')
                 ->icon('heroicon-o-banknotes'),
         ];
-    }
-
-    /**
-     * Convert English numbers to Bangla numbers.
-     */
-    function convertToBanglaNumber($number, $decimalPlaces = 0)
-    {
-        $number = number_format($number, $decimalPlaces);
-        $englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        $banglaDigits  = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-
-        return str_replace($englishDigits, $banglaDigits, $number);
     }
 }
