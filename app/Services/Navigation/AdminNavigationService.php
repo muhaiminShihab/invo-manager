@@ -2,9 +2,10 @@
 
 namespace App\Services\Navigation;
 
+use App\Filament\Pages\Settings\General;
+use App\Filament\Pages\Settings\Mail;
 use App\Filament\Resources\CustomerResource;
 use App\Filament\Resources\InvoiceResource;
-use App\Filament\Resources\SettingResource;
 use App\Filament\Resources\UserResource;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
@@ -64,7 +65,14 @@ class AdminNavigationService
     {
         return NavigationGroup::make('সেটিং সমূহ')
             ->items([
-                //
+                NavigationItem::make('জেনারেল সেটিংস')
+                    ->icon('heroicon-o-cog')
+                    ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.settings.general'))
+                    ->url(fn(): string => General::getUrl()),
+                NavigationItem::make('মেইল সেটিংস')
+                    ->icon('heroicon-o-envelope')
+                    ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.settings.mail'))
+                    ->url(fn(): string => Mail::getUrl()),
             ]);
     }
 }
