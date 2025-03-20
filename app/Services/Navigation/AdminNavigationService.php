@@ -64,7 +64,7 @@ class AdminNavigationService
     {
         return NavigationGroup::make('সেটিং সমূহ')
             ->items([
-                ...SettingResource::getNavigationItems(),
+                //
             ]);
     }
 }
