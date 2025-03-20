@@ -90,9 +90,9 @@
             <img src="{{ asset('media/logo.png') }}" width="250px" alt="Company Logo">
         </div>
         <div class="company-info">
-            {{ $settings->where('key', 'name')->first()->value }}<br>
-            {{ $settings->where('key', 'address')->first()->value }}<br>
-            {{ $settings->where('key', 'phone')->first()->value }} | {{ $settings->where('key', 'email')->first()->value }}
+            {{ trim($settings->where('name', 'site_name')->first()->payload, '"') }}<br>
+            {{ trim($settings->where('name', 'address')->first()->payload, '"') }}<br>
+            {{ trim($settings->where('name', 'phone')->first()->payload, '"') }} | {{ trim($settings->where('name', 'mail_from_address')->first()->payload, '"') }}
         </div>
         <h1 class="invoice-title">চালান ({{ $invoice->invoice_number }})</h1>
     </div>
