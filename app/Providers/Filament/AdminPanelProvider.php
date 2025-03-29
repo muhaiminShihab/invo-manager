@@ -6,6 +6,7 @@ use App\Filament\Resources\CustomerResource;
 use App\Filament\Resources\InvoiceResource;
 use App\Filament\Resources\SettingResource;
 use App\Filament\Resources\UserResource;
+use App\Models\Setting;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -31,6 +32,13 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $logo = Setting::where('name', 'site_logo')->first();
+        if ($logo && !empty($logo->payload) && $logo->payload !== "null") {
+            $panel->brandLogo(asset('storage/' . trim($logo->payload, '"')));
+        } else {
+            $panel->brandLogo(asset('media/logo.png'));
+        }
+
         return $panel
             ->default()
             ->id('admin')
@@ -50,7 +58,6 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
-            ->brandLogo(asset('media/logo.png'))
             ->brandLogoHeight('3rem')
             ->middleware([
                 EncryptCookies::class,

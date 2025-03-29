@@ -55,7 +55,8 @@ class General extends SettingsPage
                     Section::make([
                         FileUpload::make('site_logo')
                             ->image()
-                            ->label('লোগো'),
+                            ->label('লোগো')
+                            ->directory('site-logo'),
                     ])->columnSpan(1),
                 ])->from('md')->columnSpanFull()
             ]);
