@@ -45,6 +45,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('app')
             ->login()
             ->darkMode(false)
+            ->spa()
             ->colors([
                 'primary' => Color::Indigo,
             ])
