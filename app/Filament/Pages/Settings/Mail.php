@@ -44,7 +44,7 @@ class Mail extends SettingsPage
                             ->placeholder('ইমেইল প্রেরকের নাম লিখুন')
                             ->required(),
                         Forms\Components\TextInput::make('mail_from_address')
-                            ->label('প্রেরকের ঠিকানা')
+                            ->label('প্রেরকের মেইল')
                             ->placeholder('যে ইমেইল ঠিকানা থেকে ইমেইল পাঠানো হবে')
                             ->required(),
                         Forms\Components\TextInput::make('mail_host')
@@ -62,9 +62,9 @@ class Mail extends SettingsPage
                                 'ssl' => 'SSL'
                             ]),
                         Forms\Components\TextInput::make('mail_username')
-                            ->label('মেইল ইউজারনেম'),
+                            ->label('ইউজারনেম'),
                         Forms\Components\TextInput::make('mail_password')
-                            ->label('মেইল পাসওয়ার্ড'),
+                            ->label('পাসওয়ার্ড'),
                     ])->columns(2)
             ]);
     }
