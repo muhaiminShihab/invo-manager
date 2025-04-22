@@ -13,13 +13,12 @@ A modern invoice management application designed to help you track dues efficien
 </div>
 
 ## 🎯 Overview
-
+![Invoice Manager Overview](/public/overview.png)
 Invoice Manager is a powerful application built with Laravel and FilamentPHP that helps you:
-
--   📊 Manage customers and their details
--   📝 Generate and track invoices
--   💰 Monitor due payments and outstanding balances
--   ⏰ Stay on top of financial commitments
+- 📊 Manage customers and their details
+- 📝 Generate and track invoices
+- 💰 Monitor due payments and outstanding balances
+- ⏰ Stay on top of financial commitments
 
 ## ✨ Features
 
