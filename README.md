@@ -1,58 +1,89 @@
+<div align="center">
+
 # Invoice Manager
 
-A modern customer and invoice management application designed to help you track dues efficiently and manage your business finances.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Laravel](https://img.shields.io/badge/Laravel-v12.x-FF2D20.svg)](https://laravel.com)
+[![FilamentPHP](https://img.shields.io/badge/FilamentPHP-v3.x-7952B3.svg)](https://filamentphp.com)
 
-## Overview
+A modern invoice management application designed to help you track dues efficiently and manage your business finances.
 
-Invoice Manager is a powerful application that helps you:
-- Manage customers and their details
-- Generate and track invoices
-- Monitor due payments and outstanding balances
-- Stay on top of financial commitments
+[Key Features](#features) • [Installation](#installation) • [Documentation](#usage) • [Contributing](#contributing)
 
-This application is developed using FilamentPHP.
+</div>
 
-## Features
+## 🎯 Overview
 
-- Customer management system
-- Invoice generation and tracking
-- Clean and modern interface
-- User authentication
+Invoice Manager is a powerful application built with Laravel and FilamentPHP that helps you:
 
-## Getting Started
+-   📊 Manage customers and their details
+-   📝 Generate and track invoices
+-   💰 Monitor due payments and outstanding balances
+-   ⏰ Stay on top of financial commitments
+
+## ✨ Features
+
+-   👥 **Customer Management System**
+
+    -   Comprehensive customer database
+    -   Contact information tracking
+    -   Customer history and analytics
+
+-   📄 **Invoice Management**
+
+    -   Professional invoice generation
+    -   Real-time tracking and updates
+    -   Payment history monitoring
+
+-   🎨 **Modern Interface**
+
+    -   Clean and intuitive design
+    -   Responsive dashboard
+    -   User-friendly controls
+
+-   🔐 **Security**
+    -   Robust user authentication
+    -   Role-based access control
+    -   Secure data handling
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-Make sure you have the following installed:
+Ensure you have the following installed:
 
-- PHP (v8.0 or higher)
-- Composer
-- Laravel v12.x
-- FilamentPHP v3.x
-- Node.js (v14 or higher)
-- npm or yarn
-- MySQL database
+-   PHP (v8.0 or higher)
+-   Composer
+-   Laravel v12.x
+-   FilamentPHP v3.x
+-   Node.js (v14 or higher)
+-   npm or yarn
+-   MySQL database
 
 ### Installation
 
 1. Clone the repository
+
 ```bash
-git clone https://github.com/muhsiminShihab/due-manager.git
-cd due-manager
+git clone https://github.com/muhsiminShihab/invo-manager.git
+cd invo-manager
 ```
 
 2. Install dependencies
+
 ```bash
 composer install
 npm install
 ```
 
 3. Set up environment variables
+
 ```bash
 cp .env.example .env
 ```
 
 4. Generate application key
+
 ```bash
 php artisan key:generate
 ```
@@ -60,51 +91,102 @@ php artisan key:generate
 5. Configure your database in the `.env` file
 
 6. Run database migrations
+
 ```bash
 php artisan migrate
 ```
 
 7. Seed the database (optional)
+
 ```bash
 php artisan db:seed
 ```
 
 8. Start the development server
+
 ```bash
 php artisan serve
 ```
 
 9. Run frontend build (if applicable)
+
 ```bash
 npm run dev
 ```
 
-## Usage
+### Default Login Credentials
 
-- Register/Login to access the dashboard
-- Add and manage customers
-- Create and manage invoices
-- Track due payments and balances
+After setup, use these credentials to access the admin panel:
 
-## Deployment
+-   **Email**: `admin@example.com`
+-   **Password**: `p@ssword`
 
-For deployment, make sure to:
+## 📖 Usage
 
-- Set up a production database and update `.env`
-- Run `php artisan config:cache`
-- Use a web server like Nginx or Apache
-- Set up queue workers if needed (`php artisan queue:work`)
-- Enable scheduled tasks (`php artisan schedule:run`)
+1. **Dashboard Access**
 
-## Contributing
+    - Register/Login to access the dashboard
+    - View key metrics and statistics
 
-Contributions are welcome! Please submit a pull request or open an issue for discussion.
+2. **Customer Management**
 
-## License
+    - Add and manage customer profiles
+    - Track customer interactions
 
-This project is licensed under the MIT License.
+3. **Invoice Operations**
 
-## Contact
+    - Create and manage invoices
+    - Track payment status
+    - Generate reports
 
-For any questions or suggestions, please reach out at [hostforshihab@gmail.com](mailto:hostforshihab@gmail.com).
+4. **Financial Tracking**
+    - Monitor due payments
+    - Track outstanding balances
+    - Generate financial reports
 
+## 🚀 Deployment
+
+For production deployment:
+
+1. **Environment Setup**
+
+    - Set up a production database
+    - Update `.env` with production settings
+    - Run `php artisan config:cache`
+
+2. **Server Configuration**
+
+    - Configure web server (Nginx/Apache)
+    - Set up SSL certificates
+    - Configure domain settings
+
+3. **Application Services**
+    - Set up queue workers (`php artisan queue:work`)
+    - Configure scheduled tasks (`php artisan schedule:run`)
+    - Set up backup systems
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📬 Contact
+
+Muhaimin Shihab - [LinkedIn](https://linkedin.com/muhaiminshihab)
+
+Project Link: [https://github.com/muhsiminShihab/invo-manager](https://github.com/muhsiminShihab/invo-manager)
+
+---
+
+<div align="center">
+Made with ❤️ by Muhaimin Shihab
+</div>
