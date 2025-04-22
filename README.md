@@ -1,10 +1,10 @@
-# Due Manager
+# Invoice Manager
 
 A modern customer and invoice management application designed to help you track dues efficiently and manage your business finances.
 
 ## Overview
 
-Due Manager is a powerful application that helps you:
+Invoice Manager is a powerful application that helps you:
 - Manage customers and their details
 - Generate and track invoices
 - Monitor due payments and outstanding balances
