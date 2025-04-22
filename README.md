@@ -180,7 +180,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📬 Contact
 
-Muhaimin Shihab - [LinkedIn](https://linkedin.com/muhaiminshihab)
+Muhaimin Shihab - [LinkedIn](https://linkedin.com/in/muhaiminshihab)
 
 Project Link: [https://github.com/muhsiminShihab/invo-manager](https://github.com/muhsiminShihab/invo-manager)
 
