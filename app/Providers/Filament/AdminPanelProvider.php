@@ -27,6 +27,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Services\Navigation\AdminNavigationService;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -77,6 +78,10 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarWidth('250px')
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return app(AdminNavigationService::class)->build($builder);
-            });
+            })
+            ->plugins([
+                FilamentEditProfilePlugin::make()
+                    ->slug('my-profile')
+            ]);
     }
 }

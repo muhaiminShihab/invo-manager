@@ -73,6 +73,10 @@ class AdminNavigationService
                     ->icon('heroicon-o-envelope')
                     ->isActiveWhen(fn(): bool => request()->routeIs('filament.admin.pages.settings.mail'))
                     ->url(fn(): string => Mail::getUrl()),
+                NavigationItem::make('প্রোফাইল')
+                    ->icon('heroicon-o-user')
+                    ->url('app/my-profile')
+                    ->isActiveWhen(fn(): bool => request()->is('app/my-profile')),
             ]);
     }
 }
