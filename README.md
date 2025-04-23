@@ -180,9 +180,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📬 Contact
 
-Muhaimin Shihab - [LinkedIn](https://linkedin.com/in/muhaiminshihab)
+LinkedIn Profile - [https://linkedin.com/in/muhaiminshihab](https://linkedin.com/in/muhaiminshihab)
 
-Project Link: [https://github.com/muhsiminShihab/invo-manager](https://github.com/muhsiminShihab/invo-manager)
+Facebook Profile - [https://facebook.com/muhaiminshihab](https://facebook.com/muhaiminshihab)
+
+Portfolio Link: [https://muhaiminShihab.github.io](https://muhaiminShihab.github.io)
 
 ---
 
